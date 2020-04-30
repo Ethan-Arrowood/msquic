@@ -620,6 +620,9 @@ QuicPacketBuilderFinalize(
         Builder->DatagramLength += PaddingLength;
     }
 
+    free(ExpectedFinalDatagramLength);
+    free(PaddingLength);
+
     if (Builder->PacketType != SEND_PACKET_SHORT_HEADER_TYPE) {
         switch (Connection->Stats.QuicVersion) {
         case QUIC_VERSION_DRAFT_27:
@@ -830,6 +833,9 @@ Exit:
                 NULL);
         }
     }
+
+    free(FinalQuicPacket);
+    free(Header);
 }
 
 _IRQL_requires_max_(PASSIVE_LEVEL)
